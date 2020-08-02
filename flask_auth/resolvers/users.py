@@ -24,10 +24,8 @@ TYPES = {
     'email': {
         'type': 'string',
         'minLength': 3,
-        # reject white space
-        'pattern': '^[^\\s]*$'
+        'format': 'email'
     },
-    # TODO password unit test
     'password': {
         'type': 'string',
         'minLength': 8,
@@ -242,7 +240,7 @@ def password_forgot_post(mongo):
             subject='Reset Your Password',
             html_content='''
                 <p>Hello,</p>
-                <p>Someone (you, we hope) requested to reset the password for {email} on the App Admin website.</p>
+                <p>Someone (you, we hope) requested to reset the password for {email} on the {website_name} website.</p>
                 <p>Here is a link to  <a href="{website_domain}/users/password/reset?token={token}">reset your password</a></p>
                 <p>Alternatively, you may paste the following url in your browser: {website_domain}/users/password/reset?token={token}</p>
                 <p><strong>For your security, you have 15 minutes to reset this password. Afterward, this link will expire.</strong></p>
@@ -251,7 +249,8 @@ def password_forgot_post(mongo):
             '''.format(
                 email=user['email'],
                 token=token,
-                website_domain=os.environ['WEBSITE_DOMAIN']
+                website_domain=os.environ['WEBSITE_DOMAIN'],
+                website_name=os.environ['WEBSITE_NAME']
             )
         )
 
@@ -365,8 +364,7 @@ def post(mongo):
     if existing_user:
         abort(409)
 
-    # insert document. mongo unique index on email
-    # property exists as a race condition fail-safe
+    # insert document. mongo unique index on email property exists as a race condition fail-safe
     user = mongo.db.users.insert_one(data)
 
     send_email(
@@ -378,10 +376,11 @@ def post(mongo):
             <p>Here is a link to <a href="{website_domain}/users/login">login</a></p>
             <p>Alternatively, you may paste the following url in your browser: {website_domain}/users/login</p>
             <p>If you did not create an account, please reply to this email and let us know immediately.</p>
-            <p>- The App Admin Team</p>
+            <p>- The {website_name} Team</p>
         '''.format(
             email=data['email'],
-            website_domain=os.environ['WEBSITE_DOMAIN']
+            website_domain=os.environ['WEBSITE_DOMAIN'],
+            website_name=os.environ['WEBSITE_NAME']
         )
     )
 
