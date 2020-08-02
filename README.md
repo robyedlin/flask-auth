@@ -4,7 +4,8 @@
 
 1. Install and run mongodb
 2. Install python3 venv
-3. Add env vars in `env.py`
+3. Add env vars in `flask_auth/env.py`
+4. Install npm packages. Run `npm install`
 
 ## Development
 
@@ -12,3 +13,8 @@
 2. Add any missing env vars
 3. Install dependendies: Run `pip install -r requirements.txt`
 4. Start development server: Run `flask run`
+
+## Test
+
+1. Run `npx cypress open`
+2. Run tests
