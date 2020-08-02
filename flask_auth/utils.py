@@ -1,6 +1,6 @@
 import datetime
 from jsonschema import validate, FormatChecker
-from env import ENV
+from flask_auth.env import ENV
 from flask import abort
 from flask.json import JSONEncoder
 from flask_pymongo import ObjectId

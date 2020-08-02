@@ -5,7 +5,7 @@ from app_admin.utils import (
     send_email,
     validate_data
 )
-from env import ENV
+from flask_auth.env import ENV
 from flask import abort, jsonify, request, current_app
 from datetime import datetime
 from flask_pymongo import ObjectId

@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_pymongo import PyMongo
-from env import ENV
+from flask_auth.env import ENV
 import flask_auth.resolvers.users as user_resolvers
 import flask_auth.utils as utils
 
