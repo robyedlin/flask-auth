@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_pymongo import PyMongo
-import flask_auth.resolvers.db as db_resolvers
 import flask_auth.resolvers.users as user_resolvers
 import flask_auth.utils as utils
 
@@ -113,14 +112,3 @@ def users_password():
         response = user_resolvers.password_put(mongo)
         return response
 
-
-@app.route('/db/reset', methods=['GET'])
-def db_reset():
-    response = db_resolvers.reset(mongo)
-    return response
-
-
-@app.route('/_ah/warmup', methods=['GET'])
-def warmup():
-    if request.method == 'GET':
-        return '', 200, {}
