@@ -1,4 +1,3 @@
-import os
 import argon2
 from app_admin.utils import (
     add_jwt_to_db,
@@ -6,6 +5,7 @@ from app_admin.utils import (
     send_email,
     validate_data
 )
+from env import ENV
 from flask import abort, jsonify, request, current_app
 from datetime import datetime
 from flask_pymongo import ObjectId
@@ -248,8 +248,8 @@ def password_forgot_post(mongo):
             '''.format(
                 email=user['email'],
                 token=token,
-                website_domain=os.environ['WEBSITE_DOMAIN'],
-                website_name=os.environ['WEBSITE_NAME']
+                website_domain=ENV['WEBSITE_DOMAIN'],
+                website_name=ENV['WEBSITE_NAME']
             )
         )
 
@@ -378,8 +378,8 @@ def post(mongo):
             <p>- The {website_name} Team</p>
         '''.format(
             email=data['email'],
-            website_domain=os.environ['WEBSITE_DOMAIN'],
-            website_name=os.environ['WEBSITE_NAME']
+            website_domain=ENV['WEBSITE_DOMAIN'],
+            website_name=ENV['WEBSITE_NAME']
         )
     )
 

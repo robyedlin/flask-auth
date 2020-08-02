@@ -1,6 +1,6 @@
-import os
 import datetime
 from jsonschema import validate, FormatChecker
+from env import ENV
 from flask import abort
 from flask.json import JSONEncoder
 from flask_pymongo import ObjectId
@@ -8,7 +8,7 @@ from flask_jwt_extended import decode_token
 import sendgrid
 
 
-sg = sendgrid.SendGridAPIClient(api_key=os.environ['SENDGRID_API_KEY'])
+sg = sendgrid.SendGridAPIClient(api_key=ENV['SENDGRID_API_KEY'])
 
 
 class MongoEngineJSONEncoder(JSONEncoder):
@@ -45,7 +45,7 @@ def send_email(
     to_email,
     subject,
     html_content,
-    from_email=os.environ['SUPPORT_EMAIL']
+    from_email=ENV['SUPPORT_EMAIL']
 ):
     data = {
         'personalizations': [
@@ -68,7 +68,7 @@ def send_email(
             }
         ]
     }
-    if os.environ['FLASK_ENV'] == 'development':
+    if ENV['FLASK_ENV'] == 'development':
         response = data
         print(response)
     else:

@@ -1,8 +1,8 @@
-import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_pymongo import PyMongo
+from env import ENV
 import flask_auth.resolvers.users as user_resolvers
 import flask_auth.utils as utils
 
@@ -10,7 +10,7 @@ import flask_auth.utils as utils
 app = Flask(__name__)
 
 # mongodb
-app.config['MONGO_URI'] = os.environ['MONGO_URI']
+app.config['MONGO_URI'] = ENV['MONGO_URI']
 # update json encoding for mongo data types
 app.json_encoder = utils.MongoEngineJSONEncoder
 mongo = PyMongo(app)
@@ -20,11 +20,11 @@ utils.setup_mongo_indexes(mongo)
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
-if os.environ['FLASK_ENV'] != 'development':
-    app.config['JWT_COOKIE_DOMAIN'] = os.environ['COOKIE_DOMAIN']
-app.config['JWT_COOKIE_SECURE'] = False if os.environ['FLASK_ENV'] == 'development' else True
+if ENV['FLASK_ENV'] != 'development':
+    app.config['JWT_COOKIE_DOMAIN'] = ENV['COOKIE_DOMAIN']
+app.config['JWT_COOKIE_SECURE'] = False if ENV['FLASK_ENV'] == 'development' else True
 app.config['JWT_REFRESH_CSRF_HEADER_NAME'] = 'X-CSRF-REFRESH-TOKEN'
-app.config['JWT_SECRET_KEY'] = os.environ['JWT_SECRET_KEY']
+app.config['JWT_SECRET_KEY'] = ENV['JWT_SECRET_KEY']
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 jwt = JWTManager(app)
 
