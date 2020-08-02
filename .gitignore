@@ -141,3 +141,5 @@ node_modules
 
 cypress/screenshots
 cypress/video
+
+.DS_STORE
