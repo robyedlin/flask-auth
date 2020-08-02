@@ -7,7 +7,6 @@ from app_admin.utils import (
     validate_data
 )
 from flask import abort, jsonify, request, current_app
-from jsonschema import validate
 from datetime import datetime
 from flask_pymongo import ObjectId
 from flask_jwt_extended import (

@@ -111,4 +111,3 @@ def users_password():
     if request.method == 'PUT':
         response = user_resolvers.password_put(mongo)
         return response
-
