@@ -3,7 +3,7 @@
 ## Setup
 
 1. Install and run mongodb
-2. Install python3 venv
+2. Install python3 venv in `.venv`. Run `python3 -m venv .venv`
 3. Add env vars in `flask_auth/env.py`
 4. Install npm packages. Run `npm install`
 

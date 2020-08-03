@@ -1,5 +1,5 @@
 import argon2
-from app_admin.utils import (
+from flask_auth.utils import (
     add_jwt_to_db,
     format_email_address,
     send_email,
@@ -240,15 +240,15 @@ def password_forgot_post(mongo):
             html_content='''
                 <p>Hello,</p>
                 <p>Someone (you, we hope) requested to reset the password for {email} on the {website_name} website.</p>
-                <p>Here is a link to  <a href="{website_domain}/users/password/reset?token={token}">reset your password</a></p>
-                <p>Alternatively, you may paste the following url in your browser: {website_domain}/users/password/reset?token={token}</p>
+                <p>Here is a link to  <a href="{WEBSITE_URL}/users/password/reset?token={token}">reset your password</a></p>
+                <p>Alternatively, you may paste the following url in your browser: {WEBSITE_URL}/users/password/reset?token={token}</p>
                 <p><strong>For your security, you have 15 minutes to reset this password. Afterward, this link will expire.</strong></p>
                 <p>If you did not request to reset your password, you can ignore this, or reply to this email and let us know.</p>
                 <p>- The App Admin Team</p>
             '''.format(
                 email=user['email'],
                 token=token,
-                website_domain=ENV['WEBSITE_DOMAIN'],
+                WEBSITE_URL=ENV['WEBSITE_URL'],
                 website_name=ENV['WEBSITE_NAME']
             )
         )
@@ -372,13 +372,13 @@ def post(mongo):
         html_content='''
             <p>Welcome,</p>
             <p>You have successfully created an account for {email} on the App Admin website.</p>
-            <p>Here is a link to <a href="{website_domain}/users/login">login</a></p>
-            <p>Alternatively, you may paste the following url in your browser: {website_domain}/users/login</p>
+            <p>Here is a link to <a href="{WEBSITE_URL}/users/login">login</a></p>
+            <p>Alternatively, you may paste the following url in your browser: {WEBSITE_URL}/users/login</p>
             <p>If you did not create an account, please reply to this email and let us know immediately.</p>
             <p>- The {website_name} Team</p>
         '''.format(
             email=data['email'],
-            website_domain=ENV['WEBSITE_DOMAIN'],
+            WEBSITE_URL=ENV['WEBSITE_URL'],
             website_name=ENV['WEBSITE_NAME']
         )
     )

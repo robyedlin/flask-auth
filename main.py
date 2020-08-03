@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_pymongo import PyMongo
 from flask_auth.env import ENV
+import flask_auth.resolvers.db as db_resolvers
 import flask_auth.resolvers.users as user_resolvers
 import flask_auth.utils as utils
 
@@ -111,3 +112,9 @@ def users_password():
     if request.method == 'PUT':
         response = user_resolvers.password_put(mongo)
         return response
+
+
+@app.route('/db/reset', methods=['GET'])
+def db_reset():
+    response = db_resolvers.reset(mongo)
+    return response
